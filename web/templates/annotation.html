@@ -1,0 +1,53 @@
+<!--
+annotation_details.html - Display details about a user's annotation job
+Copyright (C) 2011-2018 Vas Vasiliadis <vas@uchicago.edu>
+University of Chicago
+-->
+{% extends "base.html" %}
+{% block title %}Annotation Details{% endblock %}
+{% block body %}
+  {% include "header.html" %}
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Annotation Details</h1>
+    </div>
+
+    <!-- DISPLAY ANNOTATION JOB DETAILS -->
+    <div class="container">
+      <ul>
+        <li>
+          <strong>Request ID: </strong>{{ annotation.job_id }}
+        </li>
+        <li>
+          <strong>Request Time: </strong>{{ annotation.request_time }}
+        </li>
+        <li>
+          <strong>VCF Input File: </strong>{{ annotation.file_name }}
+        </li>
+        <li>
+          <strong>Status: </strong>{{ annotation.status }}
+        </li>
+        <li>
+          <strong>Complete Time: </strong>{{ annotation.complete_time }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <ul>
+        <li>
+          <strong>Annotated Results File: </strong><a href={{s3_download}}>download</a>
+        </li>
+        <li>
+          <strong>Annotation Log File: </strong>
+            <a href="{{ url_for('annotation_log', id=annotation.job_id) }}">view</a>
+        </li>
+      </ul>
+    </div>
+
+    <hr />
+    <a href="{{ url_for('annotations_list') }}">&larr; back to annotations list</a>
+
+  </div> <!-- container -->
+{% endblock %}

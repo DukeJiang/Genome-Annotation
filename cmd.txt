@@ -1,0 +1,48 @@
+1.Launch two ec2 instances:
+INPUT:
+	aws ec2 run-instances \
+	    --image-id ami-08c7868bab90c3e85 \
+	    --instance-type t3.nano \
+	    --key-name yuxuanjiang \
+	    --security-groups mpcs \
+        --iam-instance-profile Name=instance_profile_yuxuanjiang \
+	    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=yuxuanjiang-a12-web}]'
+
+    aws ec2 run-instances \
+        --image-id ami-08c7868bab90c3e85 \
+        --instance-type t3.nano \
+        --key-name yuxuanjiang \
+        --security-groups mpcs \
+        --iam-instance-profile Name=instance_profile_yuxuanjiang \
+        --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=yuxuanjiang-a12-ann}]'
+    
+    aws ec2 run-instances \
+        --image-id ami-08c7868bab90c3e85 \
+        --instance-type t3.nano \
+        --key-name yuxuanjiang \
+        --security-groups mpcs \
+        --iam-instance-profile Name=instance_profile_yuxuanjiang \
+        --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=yuxuanjiang-a12-util}]'
+
+2.Shell into the ec2 instance:
+INPUT:
+    (web)
+	chmod 400 ~/.ssh/yuxuanjiang.pem
+	ssh -i ~/.ssh/yuxuanjiang.pem ubuntu@ec2-107-22-69-70.compute-1.amazonaws.com
+
+    (ann)
+    chmod 400 ~/.ssh/yuxuanjiang.pem
+	ssh -i ~/.ssh/yuxuanjiang.pem ubuntu@ec2-54-90-201-143.compute-1.amazonaws.com
+
+    (util)
+    chmod 400 ~/.ssh/yuxuanjiang.pem
+	ssh -i ~/.ssh/yuxuanjiang.pem ubuntu@ec2-54-90-80-59.compute-1.amazonaws.com
+
+3.Regiestering subdomains:
+    chmod +x mpcsdomain
+    ./mpcsdomain create --subdomain yuxuanjiang-a12-web --ip 107.22.69.70
+    ./mpcsdomain create --subdomain yuxuanjiang-a12-ann --ip 54.90.201.143
+    ./mpcsdomain create --subdomain yuxuanjiang-a12-util --ip 54.90.80.59
+
+4.Cloning repo:
+    git clone git@github.com:mpcs-cc/gas-DukeJiang.git /home/ubuntu/gas
